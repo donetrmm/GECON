@@ -1,0 +1,39 @@
+{
+    "model_name": "unified_gesture_model",
+    "input_size": [
+        224,
+        224,
+        3
+    ],
+    "classes": {
+        "0": "Sonrisa",
+        "1": "Fruncir el ce\u00f1o",
+        "2": "Ojo derecho cerrado",
+        "3": "Ojo izquierdo cerrado",
+        "4": "Movimiento de cejas",
+        "5": "Mano abierta",
+        "6": "Mano cerrada",
+        "7": "Pulgar arriba",
+        "8": "Pulgar abajo",
+        "9": "Se\u00f1al con dos dedos",
+        "10": "Palma hacia la c\u00e1mara",
+        "11": "Gesto de OK con la mano",
+        "12": "Gesto de circulo con la mano"
+    },
+    "commands": {
+        "0": "Aceptar comando",
+        "1": "Cancelar acci\u00f3n",
+        "2": "Avanzar",
+        "3": "Retroceder",
+        "4": "Confirmar",
+        "5": "Detener",
+        "6": "Ejecutar",
+        "7": "Aceptar",
+        "8": "Rechazar",
+        "9": "Pausa/Reproducir",
+        "10": "Encender",
+        "11": "Finalizar acci\u00f3n",
+        "12": "Reiniciar"
+    },
+    "model_type": "combined"
+}

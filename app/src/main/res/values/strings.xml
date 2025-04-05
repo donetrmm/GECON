@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GECON</string>
+    <string name="home_title">GECON</string>
+    <string name="face_gestures">Expresiones faciles</string>
+    <string name="hand_gestures">Expresiones manuales</string>
+    <string name="app_description">Reconocimiento de expresiones faciales y manuales para comandos</string>
+    <string name="recognize_gesture">Reconocimiento de Gestos</string>
+    <string name="recognition_title">Reconocimiento</string>
+    <string name="processing_image">Procesando imagen</string>
+    <string name="recognition_result">Resultado</string>
+    <string name="no_gesture_detected">No se detectaron gestos</string>
+</resources>
