@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import com.gecon.core.ml.DetectionResult
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,6 +18,10 @@ class ImageLoader @Inject constructor(
 
     suspend fun loadImage(uri: Uri): Bitmap? = withContext(Dispatchers.IO) {
         return@withContext imagePreprocess.preprocessImage(uri)
+    }
+
+    suspend fun loadImageWithDetection(uri: Uri): DetectionResult? = withContext(Dispatchers.IO) {
+        return@withContext imagePreprocess.preprocessImageWithDetection(uri)
     }
 
     suspend fun loadAssetImage(fileName: String): Bitmap? = withContext(Dispatchers.IO) {

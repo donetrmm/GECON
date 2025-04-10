@@ -53,6 +53,13 @@ android {
 }
 
 dependencies {
+
+    // MediaPipe para detección de manos y caras (similar a la CNN)
+    implementation(libs.tasks.vision)
+
+// ML Kit para detección como backup
+    implementation(libs.face.detection)
+    implementation(libs.object1.detection.v1700)
     // Core Android
     implementation(libs.androidx.core.ktx.v1150)
     implementation(libs.androidx.lifecycle.runtime.ktx.v287)
@@ -69,6 +76,10 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.vision.common)
+    implementation(libs.play.services.mlkit.face.detection)
+    implementation(libs.object1.detection.common)
+    implementation(libs.object1.detection)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 

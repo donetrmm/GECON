@@ -28,7 +28,7 @@ class ModelInterpreter @Inject constructor(
 
             val files = context.assets.list("models")
             files?.forEach { Log.d("Assets", "Archivo encontrado: $it") }
-            val assetFileDescriptor = context.assets.openFd("models/gecon_modelV3.tflite")
+            val assetFileDescriptor = context.assets.openFd("models/gecon_final.tflite")
             val fileInputStream = FileInputStream(assetFileDescriptor.fileDescriptor)
             val fileChannel = fileInputStream.channel
             val startOffset = assetFileDescriptor.startOffset

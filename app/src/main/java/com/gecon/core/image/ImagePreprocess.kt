@@ -6,20 +6,44 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
+import com.gecon.core.ml.DetectionResult
+import com.gecon.core.ml.GestureDetector
 import java.io.IOException
 import javax.inject.Inject
 
 class ImagePreprocess @Inject constructor(
-    private val context: Context
+    private val context: Context,
+    private val gestureDetector: GestureDetector
 ) {
-
-    fun preprocessImage(uri: Uri): Bitmap? {
+    suspend fun preprocessImage(uri: Uri): Bitmap? {
         try {
             val inputStream = context.contentResolver.openInputStream(uri)
             inputStream?.use {
                 val bitmap = BitmapFactory.decodeStream(it)
                 val rotatedBitmap = correctImageOrientation(uri, bitmap)
-                return resizeBitmapIfNeeded(rotatedBitmap)
+                val resizedBitmap = resizeBitmapIfNeeded(rotatedBitmap)
+
+                
+                val detectionResult = gestureDetector.detectAndCropGesture(resizedBitmap)
+
+                return detectionResult.croppedBitmap
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    suspend fun preprocessImageWithDetection(uri: Uri): DetectionResult? {
+        try {
+            val inputStream = context.contentResolver.openInputStream(uri)
+            inputStream?.use {
+                val bitmap = BitmapFactory.decodeStream(it)
+                val rotatedBitmap = correctImageOrientation(uri, bitmap)
+                val resizedBitmap = resizeBitmapIfNeeded(rotatedBitmap)
+
+                
+                return gestureDetector.detectAndCropGesture(resizedBitmap)
             }
         } catch (e: Exception) {
             e.printStackTrace()

@@ -83,7 +83,7 @@ fun HomeScreen(
             }
 
             item {
-                Spacer(modifier = Modifier.height(72.dp)) // Espacio para que no se oculte contenido detrás del bottom bar
+                Spacer(modifier = Modifier.height(72.dp)) 
             }
         }
     }

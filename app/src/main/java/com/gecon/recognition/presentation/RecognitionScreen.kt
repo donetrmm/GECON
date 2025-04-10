@@ -1,7 +1,6 @@
 package com.gecon.recognition.presentation
 
 import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,12 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,13 +27,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gecon.R
 import com.gecon.core.image.ImagePicker
 import com.gecon.core.ui.components.GestureCard
 import com.gecon.recognition.presentation.components.ImageWithOverlay
@@ -52,7 +45,7 @@ fun RecognitionScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.recognition_title)) },
+                title = { Text(text = "Reconocimiento de gestos") },
                 actions = {
                     if (state.imageBitmap != null) {
                         IconButton(onClick = { viewModel.clearData() }) {
@@ -86,7 +79,7 @@ fun RecognitionScreen(
                         ) {
                             CircularProgressIndicator()
                             Text(
-                                text = stringResource(id = R.string.processing_image),
+                                text = "Procesando imagen...",
                                 style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.padding(top = 60.dp)
                             )
@@ -96,14 +89,16 @@ fun RecognitionScreen(
                     item {
                         ImageWithOverlay(
                             bitmap = state.imageBitmap!!,
-                            topResult = state.recognitionResults.firstOrNull()
+                            topResult = state.recognitionResults.firstOrNull(),
+                            boundingBox = state.boundingBox,
+                            detectionType = state.detectionType
                         )
                     }
 
                     if (state.recognitionResults.isNotEmpty()) {
                         item {
                             Text(
-                                text = stringResource(id = R.string.recognition_result),
+                                text = "Resultado del reconocimiento",
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
@@ -121,6 +116,27 @@ fun RecognitionScreen(
                                     gestureInfo = topResult.gestureInfo,
                                     confidence = topResult.confidence
                                 )
+                            }
+                        }
+
+                        item {
+                            state.detectionType?.let { type ->
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 8.dp)
+                                ) {
+                                    Text(
+                                        text = "Tipo de detección: ${
+                                            when (type) {
+                                                com.gecon.core.ml.DetectionType.FACE -> "Facial"
+                                                com.gecon.core.ml.DetectionType.HAND -> "Manual"
+                                                else -> "Ninguna"
+                                            }
+                                        }",
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
                             }
                         }
                     } else {
@@ -154,7 +170,6 @@ fun RecognitionScreen(
                         )
                     }
                 }
-
 
                 item {
                     Spacer(modifier = Modifier.height(72.dp))
